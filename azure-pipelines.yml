@@ -22,15 +22,18 @@ jobs:
       # Be fragile, like a beautiful porcelain doll
       set -e
 
-      $(JULIA) -e 'using BinaryBuilder, Pkg; @show Pkg.Operations.registered_paths(Pkg.Types.Context(), BinaryBuilder.jll_uuid("Xorg_libX11_jll"))'
-
-      cd /depot/registries/General
+      pushd /depot/registries
+      if [[ ! -d "General.old" ]]; then
+          cp -rp General General.old
+      fi
+      git clone https://github.com/JuliaRegistries/General.git
+      pushd General
       cat X/Xorg_libX11_jll/Versions.toml
       git status
       git branch
-      cd -
 
       $(JULIA) -e 'using BinaryBuilder, Pkg; Pkg.update(); @show BinaryBuilder.get_next_wrapper_version("Xorg_libX11", v"1.6.9")'
+      false
       # Normally we look at the last pushed commit
       COMPARE_AGAINST="HEAD~1"
 
