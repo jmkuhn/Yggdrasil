@@ -22,12 +22,7 @@ jobs:
       # Be fragile, like a beautiful porcelain doll
       set -e
 
-      pushd /depot/registries
-      if [[ ! -d "General.old2" ]]; then
-          mv General General.old
-      fi
-      git clone https://github.com/JuliaRegistries/General.git
-      pushd General
+      pushd /depot/registries/General
       cat X/Xorg_libX11_jll/Versions.toml
       git status
       git branch
