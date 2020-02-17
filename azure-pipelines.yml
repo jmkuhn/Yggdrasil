@@ -23,8 +23,8 @@ jobs:
       set -e
 
       pushd /depot/registries
-      if [[ ! -d "General.old" ]]; then
-          cp -rp General General.old
+      if [[ ! -d "General.old2" ]]; then
+          mv General General.old
       fi
       git clone https://github.com/JuliaRegistries/General.git
       pushd General
