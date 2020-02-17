@@ -22,7 +22,8 @@ jobs:
       # Be fragile, like a beautiful porcelain doll
       set -e
 
-      pushd /depot/registries/General
+      pushd /depot/registries/General.old
+      ls -a
       cat X/Xorg_libX11_jll/Versions.toml
       git status
       git branch
