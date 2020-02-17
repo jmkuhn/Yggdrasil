@@ -23,9 +23,9 @@ jobs:
       set -e
 
       cd /depot/registries/General
+      cat X/Xorg_libX11_jll/Versions.toml
       git status
       git branch
-      cat X/Xorg_libX11_jll/Versions.toml
       cd -
 
       $(JULIA) -e 'using BinaryBuilder, Pkg; Pkg.update(); @show BinaryBuilder.get_next_wrapper_version("Xorg_libX11", v"1.6.9")'
