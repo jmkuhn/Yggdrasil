@@ -22,6 +22,8 @@ jobs:
       # Be fragile, like a beautiful porcelain doll
       set -e
 
+      $(JULIA) -e 'using BinaryBuilder, Pkg; @show Pkg.Operations.registered_paths(Pkg.Types.Context(), BinaryBuilder.jll_uuid("Xorg_libX11_jll"))'
+
       cd /depot/registries/General
       cat X/Xorg_libX11_jll/Versions.toml
       git status
