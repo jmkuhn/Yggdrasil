@@ -146,8 +146,8 @@ function gcc_sources(gcc_version::VersionNumber, compiler_target::Platform; kwar
             ]
         elseif arch(compiler_target) in [:powerpc64le]
             libc_sources = [
-                "https://mirrors.kernel.org/gnu/glibc/glibc-2.25.tar.xz" =>
-                "067bd9bb3390e79aa45911537d13c3721f1d9d3769931a30c2681bfee66f23a0",
+                "https://mirrors.kernel.org/gnu/glibc/glibc-2.17.tar.xz" =>
+                "6914e337401e0e0ade23694e1b2c52a5f09e4eda3270c67e7c3ba93a89b5b23e",
             ]
         else
             error("Unknown arch for glibc for compiler target $(compiler_target)")
@@ -438,6 +438,11 @@ function gcc_script(compiler_target::Platform)
 
         # Patch for building glibc 2.25-2.30 on aarch64
         atomic_patch -p1 $WORKSPACE/srcdir/patches/glibc_aarch64_relocation.patch || true
+
+        # Patches for building glibc 2.17 on ppc64le
+        for p in ${WORKSPACE}/srcdir/patches/glibc-ppc64le-*.patch; do
+            atomic_patch -p1 ${p} || true;
+        done
 
         # Configure glibc
         mkdir ${WORKSPACE}/srcdir/glibc_build
